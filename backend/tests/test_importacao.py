@@ -39,6 +39,7 @@ def test_invoice_rejects_wrong_bank_format(tmp_path: Path):
         assert "PDF" in str(exc)
     else:
         raise AssertionError("Formato deveria ser rejeitado")
+<<<<<<< HEAD
 
 
 def test_invoice_keeps_iof_and_classifies_it_as_debit(tmp_path: Path):
@@ -85,3 +86,5 @@ def test_odoo_uses_explicit_kind_column(tmp_path: Path):
     wb.save(path)
     data = import_odoo(path)
     assert data["rows"][0]["kind"] == "Compra"
+=======
+>>>>>>> 8c6000e2885993cbbb1fe507be2aeb004eb5c52f

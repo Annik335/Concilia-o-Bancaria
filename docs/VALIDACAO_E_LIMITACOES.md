@@ -4,10 +4,17 @@
 
 | Verificação | Resultado | Observação |
 |---|---|---|
+<<<<<<< HEAD
 | Pytest backend | **24 aprovados** | Normalização, motor, importação, OCR, endpoints, ajuste manual, auditoria, reprocessamento e exportação. |
 | Migração Alembic | **Aprovada** | Executada em SQLite descartável; 7 tabelas criadas e coluna `is_manual` verificada na tabela `match_results`. |
 | OCR imagem Santander | **Aprovado em amostra sintética** | Dois lançamentos de teste foram extraídos de PNG gerado para teste. Não equivale a homologação com fatura original. |
 | Sintaxe TypeScript/TSX | **Verificada** | 4 arquivos `.ts`/`.tsx` passaram pela transpilation sintática com TypeScript global. Isso não substitui a checagem completa de tipos. |
+=======
+| Pytest backend | **16 aprovados** | Normalização, motor, importação, OCR, endpoints, ajuste manual, auditoria, reprocessamento e exportação. |
+| Migração Alembic | **Aprovada** | Executada em SQLite descartável; 7 tabelas criadas e coluna `is_manual` verificada na tabela `match_results`. |
+| OCR imagem Santander | **Aprovado em amostra sintética** | Dois lançamentos de teste foram extraídos de PNG gerado para teste. Não equivale a homologação com fatura original. |
+| Sintaxe TypeScript/TSX | **Verificação de transpilation executada** | Verificação sintática via TypeScript. |
+>>>>>>> 8c6000e2885993cbbb1fe507be2aeb004eb5c52f
 | Build completo Vite | **Não executado** | A instalação de dependências do frontend excedeu o limite de rede disponível nesta sessão. Executar `npm install` e `npm run build` no ambiente de desenvolvimento. |
 | Docker Compose / PostgreSQL em contêiner | **Não executado nesta sessão** | Arquivos de implantação preparados, mas a subida dos serviços não foi validada aqui. |
 | Login Microsoft Entra ID | **Pendente** | Integração corporativa necessita registro de aplicação, tenant, fluxo OIDC e validação de token com a TI. |
@@ -20,7 +27,11 @@ cd backend
 PYTHONPATH=. pytest -q
 ```
 
+<<<<<<< HEAD
 Resultado observado: `24 passed`.
+=======
+Resultado observado: `16 passed`.
+>>>>>>> 8c6000e2885993cbbb1fe507be2aeb004eb5c52f
 
 ## Limitações funcionais conhecidas
 
@@ -46,4 +57,8 @@ Resultado observado: `24 passed`.
 - Exercitar reprocessamento, duplicidade, concorrência e importação repetida com usuários distintos.
 - Aprovar manualmente a lista de pendências e divergências antes de liberar qualquer processo produtivo.
 
+<<<<<<< HEAD
 **Conclusão:** o backend possui 24 testes automatizados aprovados e a migração está verificada. A análise sintática TS/TSX também foi executada. A aplicação é uma base funcional de desenvolvimento/homologação, mas build do frontend, subida Docker, autenticação corporativa e homologação com documentos reais continuam pendentes. Não está pronta para produção.
+=======
+**Conclusão:** o backend possui testes automatizados aprovados e a migração está verificada. A aplicação é uma base funcional de desenvolvimento/homologação, mas build do frontend, subida Docker, autenticação corporativa e homologação com documentos reais continuam pendentes. Não está pronta para produção.
+>>>>>>> 8c6000e2885993cbbb1fe507be2aeb004eb5c52f

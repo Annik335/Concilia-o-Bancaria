@@ -9,7 +9,11 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
     healthcheck:
+<<<<<<< HEAD
       test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+=======
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-epa_app} -d ${POSTGRES_DB:-epa_conciliacao}"]
+>>>>>>> 8c6000e2885993cbbb1fe507be2aeb004eb5c52f
       interval: 5s
       timeout: 5s
       retries: 20
@@ -24,30 +28,43 @@ services:
       ENVIRONMENT: ${ENVIRONMENT:-development}
       MAX_UPLOAD_MB: ${MAX_UPLOAD_MB:-20}
       STORAGE_PATH: /app/storage
+<<<<<<< HEAD
       TESSERACT_CMD: ${TESSERACT_CMD:-tesseract}
       ALLOWED_ORIGINS: ${ALLOWED_ORIGINS:-http://localhost:5173,http://127.0.0.1:5173}
     ports:
       - "8000:8000"
+=======
+      ALLOWED_ORIGINS: http://localhost:5173
+    ports: ["8000:8000"]
+>>>>>>> 8c6000e2885993cbbb1fe507be2aeb004eb5c52f
     volumes:
       - uploads:/app/storage
     depends_on:
       db:
         condition: service_healthy
+<<<<<<< HEAD
     healthcheck:
       test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/api/health', timeout=3).read()"]
       interval: 10s
       timeout: 5s
       retries: 12
       start_period: 30s
+=======
+>>>>>>> 8c6000e2885993cbbb1fe507be2aeb004eb5c52f
 
   frontend:
     build: ./frontend
     restart: unless-stopped
+<<<<<<< HEAD
     ports:
       - "5173:80"
     depends_on:
       backend:
         condition: service_healthy
+=======
+    ports: ["5173:80"]
+    depends_on: [backend]
+>>>>>>> 8c6000e2885993cbbb1fe507be2aeb004eb5c52f
 
 volumes:
   postgres_data:

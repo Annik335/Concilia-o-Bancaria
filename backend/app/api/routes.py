@@ -58,6 +58,7 @@ def _summary(matches: list[MatchRecord], invoice: list[TransactionRecord], odoo:
     total_o = sum((normalized_financial_amount(Decimal(str(t.amount)), t.kind) for t in odoo), Decimal("0.00"))
     matched = sum((normalized_financial_amount(Decimal(str(db_tx.amount)), db_tx.kind) for m in matches if m.status == "CONCILIADO" and m.invoice_transaction_id
                    for db_tx in invoice if db_tx.id == m.invoice_transaction_id), Decimal("0.00"))
+<<<<<<< HEAD
     summary = {**counts, "total_fatura": str(total_f), "total_odoo": str(total_o), "valor_conciliado": str(matched),
                "diferenca_fontes": str(total_f - total_o), "total_lancamentos_fatura": len(invoice), "total_lancamentos_odoo": len(odoo),
                "percentual_conciliado": round(100 * counts["CONCILIADO"] / max(1, len(invoice)), 1) if invoice else 0,
@@ -65,6 +66,11 @@ def _summary(matches: list[MatchRecord], invoice: list[TransactionRecord], odoo:
                "conciliated": counts["CONCILIADO"], "divergent": counts["DIVERGENTE"],
                "pending": counts["PENDENTE_REVISAO"], "only_invoice": counts["SOMENTE_FATURA"], "only_odoo": counts["SOMENTE_ODOO"]}
     return summary
+=======
+    return {**counts, "total_fatura": str(total_f), "total_odoo": str(total_o), "valor_conciliado": str(matched),
+            "diferenca_fontes": str(total_f - total_o), "total_lancamentos_fatura": len(invoice), "total_lancamentos_odoo": len(odoo),
+            "percentual_conciliado": round(100 * counts["CONCILIADO"] / max(1, len(invoice)), 1) if invoice else 0}
+>>>>>>> 8c6000e2885993cbbb1fe507be2aeb004eb5c52f
 
 
 def _audit(db: Session, user: User, rec_id: int | None, action: str, entity_type: str, entity_id: str = "",
@@ -101,10 +107,14 @@ def me(user: User = Depends(get_current_user)):
 @router.post("/reconciliations")
 def create_reconciliation(payload: ReconciliationCreate, db: Session = Depends(get_db), user: User = Depends(require_roles("ADMIN", "ANALISTA"))):
     rec = ReconciliationRecord(name=payload.name, bank=payload.bank, period_start=payload.period_start,
+<<<<<<< HEAD
         period_end=payload.period_end, 
 tolerance_days=payload.tolerance_days, 
 created_by=user.id
 )
+=======
+        period_end=payload.period_end, tolerance_days=payload.tolerance_days, created_by=user.id)
+>>>>>>> 8c6000e2885993cbbb1fe507be2aeb004eb5c52f
     db.add(rec); db.flush()
     _audit(db, user, rec.id, "CRIAR_CONCILIACAO", "reconciliation", str(rec.id), after={"name":rec.name,"bank":rec.bank})
     db.commit(); db.refresh(rec)
@@ -124,10 +134,14 @@ def _validate_upload(file: UploadFile, content: bytes, allowed: set[str]):
 
 
 async def _store_upload(file: UploadFile, reconciliation_id: int, source: str, allowed: set[str], db: Session, user: User, rec: ReconciliationRecord, mapping: dict | None = None):
+<<<<<<< HEAD
     max_bytes = settings.max_upload_mb * 1024 * 1024
     content = await file.read(max_bytes + 1)
     if len(content) > max_bytes:
         raise HTTPException(413, f"O arquivo excede {settings.max_upload_mb} MB.")
+=======
+    content = await file.read()
+>>>>>>> 8c6000e2885993cbbb1fe507be2aeb004eb5c52f
     ext = _validate_upload(file, content, allowed)
     digest = hashlib.sha256(content).hexdigest()
     duplicate = db.scalar(select(ImportFile).where(ImportFile.reconciliation_id == rec.id, ImportFile.sha256 == digest))
@@ -169,10 +183,14 @@ async def upload_invoice(reconciliation_id: int, file: UploadFile = File(...), d
 
 @router.post("/imports/odoo/preview")
 async def preview_odoo(file: UploadFile = File(...), db: Session = Depends(get_db), user: User = Depends(require_roles("ADMIN", "ANALISTA"))):
+<<<<<<< HEAD
     max_bytes = settings.max_upload_mb * 1024 * 1024
     content = await file.read(max_bytes + 1)
     if len(content) > max_bytes:
         raise HTTPException(413, f"O arquivo excede {settings.max_upload_mb} MB.")
+=======
+    content = await file.read()
+>>>>>>> 8c6000e2885993cbbb1fe507be2aeb004eb5c52f
     ext = _validate_upload(file, content, {".xlsx", ".xlsm"})
     temp_path = None
     try:
@@ -197,7 +215,11 @@ async def upload_odoo(reconciliation_id: int, file: UploadFile = File(...), mapp
     if mapping_json:
         try: mapping = json.loads(mapping_json)
         except json.JSONDecodeError: raise HTTPException(422, "Mapeamento manual inválido.")
+<<<<<<< HEAD
         allowed_fields = {"date","name","description","reference","debit","credit","amount","company","kind"}
+=======
+        allowed_fields = {"date","name","description","reference","debit","credit","amount","company"}
+>>>>>>> 8c6000e2885993cbbb1fe507be2aeb004eb5c52f
         if not isinstance(mapping,dict) or set(mapping)-allowed_fields:
             raise HTTPException(422, "O mapeamento contém campos não reconhecidos.")
     return await _store_upload(file, reconciliation_id, "ODOO", {".xlsx", ".xlsm"}, db, user, rec, mapping=mapping)
@@ -305,6 +327,7 @@ def manual_match(reconciliation_id: int, payload: ManualMatchRequest, db: Sessio
                before=_match_dict(db,previous),justification=payload.justification)
         db.delete(previous)
     if occupied: db.flush()
+<<<<<<< HEAD
     difference = (normalized_financial_amount(Decimal(str(f.amount)), f.kind) -
                   normalized_financial_amount(Decimal(str(o.amount)), o.kind)).quantize(Decimal("0.01"))
     if payload.status == "CONCILIADO":
@@ -314,6 +337,16 @@ def manual_match(reconciliation_id: int, payload: ManualMatchRequest, db: Sessio
             value=(kind or "").upper()
             if any(x in value for x in ("ESTORNO","CREDITO","CRÉDITO","CREDIT")): return "CREDITO"
             if any(x in value for x in ("COMPRA","DEBITO","DÉBITO","DEBIT","IOF","TAXA","ENCARGO","FEE")): return "DEBITO"
+=======
+    difference = (abs(Decimal(str(f.amount))) - abs(Decimal(str(o.amount)))).quantize(Decimal("0.01"))
+    if payload.status == "CONCILIADO":
+        if difference != 0:
+            raise HTTPException(422, "Não é possível confirmar como conciliado: os valores absolutos são diferentes.")
+        def group(kind: str):
+            value=(kind or "").upper()
+            if any(x in value for x in ("ESTORNO","CREDITO","CRÉDITO","CREDIT")): return "CREDITO"
+            if any(x in value for x in ("COMPRA","DEBITO","DÉBITO","DEBIT")): return "DEBITO"
+>>>>>>> 8c6000e2885993cbbb1fe507be2aeb004eb5c52f
             return None
         gf,go=group(f.kind),group(o.kind)
         if gf and go and gf != go:

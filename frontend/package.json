@@ -3,6 +3,7 @@
   "private": true,
   "version": "1.0.0",
   "type": "module",
+<<<<<<< HEAD
   "scripts": {
     "dev": "vite --host 0.0.0.0",
     "build": "tsc -b && vite build",
@@ -21,4 +22,9 @@
     "typescript": "~5.7.2",
     "vite": "^6.0.7"
   }
+=======
+  "scripts": {"dev":"vite --host 0.0.0.0", "build":"tsc -b && vite build", "preview":"vite preview --host 0.0.0.0"},
+  "dependencies": {"lucide-react":"^0.468.0", "react":"^18.3.1", "react-dom":"^18.3.1"},
+  "devDependencies": {"@types/react":"^18.3.18", "@types/react-dom":"^18.3.5", "@vitejs/plugin-react":"^4.3.4", "typescript":"~5.7.2", "vite":"^6.0.7"}
+>>>>>>> 8c6000e2885993cbbb1fe507be2aeb004eb5c52f
 }

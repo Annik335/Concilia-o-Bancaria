@@ -8,11 +8,19 @@ Aplicação web em React + TypeScript, API FastAPI, SQLAlchemy/Alembic e Postgre
 
 - Dashboard financeiro alimentado pelos dados efetivamente importados. Sem importações, os indicadores permanecem zerados; não há dados de demonstração.
 - Identidade visual do Grupo EPA e arquivo de logo separado em `frontend/public/epa-logo.png`.
+<<<<<<< HEAD
 - Cadastro de conciliações por banco e período, com tolerância de data configurável (0 a 60 dias; padrão de 3 dias).
 - Importação de fatura Itaú em PDF, leitura de texto em todas as páginas e OCR nas páginas escaneadas/sem texto útil.
 - Importação de fatura Santander em PNG/JPG, com correção de orientação EXIF, escala, contraste e nitidez antes do OCR. O arquivo original é preservado.
 - Prévia dos lançamentos e possibilidade de corrigir campos antes do processamento, com justificativa e trilha de auditoria.
 - Importação Odoo XLSX/XLSM por nomes de cabeçalho, busca da linha de cabeçalho nas primeiras 40 linhas, sugestão e mapeamento manual de campos, inclusive natureza/tipo. Quando existirem colunas Débito e Crédito, elas prevalecem sobre um Total genérico; quando só houver Valor/Total sem natureza explícita, o sistema marca a natureza como indefinida e exige revisão, em vez de presumir crédito. Colunas desconhecidas são informadas e preservadas no dado bruto.
+=======
+- Cadastro de conciliações por banco e período, com tolerância de data configurável (0 a 31 dias; padrão de 3 dias).
+- Importação de fatura Itaú em PDF, leitura de texto em todas as páginas e OCR nas páginas escaneadas/sem texto útil.
+- Importação de fatura Santander em PNG/JPG, com correção de orientação EXIF, escala, contraste e nitidez antes do OCR. O arquivo original é preservado.
+- Prévia dos lançamentos e possibilidade de corrigir campos antes do processamento, com justificativa e trilha de auditoria.
+- Importação Odoo XLSX/XLSM por nomes de cabeçalho, busca da linha de cabeçalho nas primeiras 40 linhas, sugestão e mapeamento manual de campos. Colunas desconhecidas são informadas e preservadas no dado bruto.
+>>>>>>> 8c6000e2885993cbbb1fe507be2aeb004eb5c52f
 - Motor independente da interface, com `Decimal`, comparação de valor, data, natureza da transação, nome/referência, confiança e explicação.
 - Resultados: conciliado, divergente, somente Odoo, somente fatura e pendente de revisão.
 - Associação manual e desfazimento com justificativa e auditoria.
@@ -131,7 +139,11 @@ npm install
 npm run dev
 ```
 
+<<<<<<< HEAD
 Acesse http://localhost:5173. No modo Vite, as chamadas `/api` são encaminhadas pelo proxy para `http://127.0.0.1:8000`. No Docker, o Nginx encaminha `/api` ao serviço backend, sem fixar `localhost` no navegador. Para uma API em outro endereço, configure `VITE_API_URL` no build.
+=======
+Acesse http://localhost:5173. O endereço padrão da API é `http://localhost:8000/api`; pode ser alterado pela variável `VITE_API_URL` no build.
+>>>>>>> 8c6000e2885993cbbb1fe507be2aeb004eb5c52f
 
 ## 6. Testes do backend
 
@@ -141,7 +153,11 @@ Com as dependências instaladas, na pasta `backend`:
 PYTHONPATH=. pytest -q
 ```
 
+<<<<<<< HEAD
 A suíte cobre normalização monetária/data, motor de conciliação, importação PDF multipágina, mapeamento Odoo (incluindo sinais e natureza), OCR de imagem, API integrada, auditoria, ajustes, reprocessamento e exportação. Consulte `docs/VALIDACAO_E_LIMITACOES.md` para os resultados executados nesta entrega e para o que ainda não foi homologado.
+=======
+A suíte cobre normalização monetária/data, motor de conciliação, importação PDF multipágina, mapeamento Odoo, OCR de imagem, API integrada, auditoria, ajustes, reprocessamento e exportação. Consulte `docs/VALIDACAO_E_LIMITACOES.md` para os resultados executados nesta entrega e para o que ainda não foi homologado.
+>>>>>>> 8c6000e2885993cbbb1fe507be2aeb004eb5c52f
 
 ## 7. Fluxo operacional recomendado
 

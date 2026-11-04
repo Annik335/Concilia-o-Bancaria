@@ -51,6 +51,7 @@ def test_business_totals_normalize_debit_credit_conventions():
     assert normalized_financial_amount(Decimal("120.00"),"COMPRA") == Decimal("120.00")
     assert normalized_financial_amount(Decimal("-120.00"),"DEBITO") == Decimal("120.00")
     assert normalized_financial_amount(Decimal("15.00"),"ESTORNO") == Decimal("-15.00")
+<<<<<<< HEAD
 
 
 def test_different_natures_are_never_auto_linked():
@@ -80,3 +81,5 @@ def test_ambiguous_component_does_not_repeat_transaction_ids():
     assert len(used_invoice) == len(set(used_invoice))
     assert len(used_odoo) == len(set(used_odoo))
     assert r.summary["PENDENTE_REVISAO"] >= 2
+=======
+>>>>>>> 8c6000e2885993cbbb1fe507be2aeb004eb5c52f

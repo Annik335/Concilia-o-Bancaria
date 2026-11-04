@@ -13,7 +13,10 @@ ALIASES = {
     "credit": ["credito", "crédito", "credit"],
     "amount": ["total", "valor", "amount", "saldo", "balance"],
     "company": ["empresa", "company"],
+<<<<<<< HEAD
     "kind": ["tipo", "natureza", "movimento", "tipo de lancamento", "tipo lancamento", "kind", "type", "operation"],
+=======
+>>>>>>> 8c6000e2885993cbbb1fe507be2aeb004eb5c52f
 }
 
 def _norm(s: object) -> str:
@@ -65,6 +68,7 @@ def import_odoo(path: str | Path, mapping: dict[str, str] | None = None) -> dict
         partner = str(get("name") or "").strip()
         description = str(get("description") or "").strip()
         reference = str(get("reference") or "").strip()
+<<<<<<< HEAD
         # Prefer explicit debit/credit columns over a generic Total/Valor column.
         # Odoo exports often include both a signed total and separate accounting columns;
         # the debit/credit pair is the clearest source for the transaction's nature.
@@ -98,11 +102,21 @@ def import_odoo(path: str | Path, mapping: dict[str, str] | None = None) -> dict
             elif any(token in normalized_kind for token in ("debito", "debit", "compra", "taxa", "iof")) and kind == "CREDITO":
                 kind = "INDEFINIDO"
 
+=======
+        amount = parse_money(get("amount")) if "amount" in detected else None
+        if amount is None:
+            debit, credit = parse_money(get("debit")), parse_money(get("credit"))
+            amount = (credit or 0) - (debit or 0) if debit is not None or credit is not None else None
+>>>>>>> 8c6000e2885993cbbb1fe507be2aeb004eb5c52f
         if dt is None or amount is None:
             errors.append({"row": excel_row, "reason": "Data ou valor inválido/ausente"})
             continue
         rows.append({"date": dt.isoformat(), "merchant": partner or description or "Sem parceiro informado", "description": description,
+<<<<<<< HEAD
                      "reference": reference, "amount": str(amount), "kind": kind,
+=======
+                     "reference": reference, "amount": str(amount), "kind": "CREDITO" if amount >= 0 else "DEBITO",
+>>>>>>> 8c6000e2885993cbbb1fe507be2aeb004eb5c52f
                      "raw": {str(headers[i] or f"coluna_{i+1}"): str(v) if v is not None else None for i, v in enumerate(values)}})
     unknown = [h for h in headers if h and not any(_norm(a) == h or _norm(a) in h for aliases in ALIASES.values() for a in aliases)]
     wb.close()

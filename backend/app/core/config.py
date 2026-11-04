@@ -1,7 +1,10 @@
 from pydantic_settings import BaseSettings, SettingsConfigDict
+<<<<<<< HEAD
 import os
 import shutil
 from pathlib import Path
+=======
+>>>>>>> 8c6000e2885993cbbb1fe507be2aeb004eb5c52f
 
 class Settings(BaseSettings):
     app_name: str = "Grupo EPA | Conciliação Bancária"
@@ -16,6 +19,7 @@ class Settings(BaseSettings):
     model_config = SettingsConfigDict(env_file=".env", extra="ignore")
 
 settings = Settings()
+<<<<<<< HEAD
 
 # Tesseract is resolved portably: Docker/Linux uses PATH, Windows can set TESSERACT_CMD.
 # Do not hard-code a workstation path; native text PDFs must work even when OCR is absent.
@@ -29,3 +33,7 @@ try:
 except Exception:
     # OCR import reports a clear diagnostic only when OCR is actually requested.
     pass
+=======
+import pytesseract
+pytesseract.pytesseract.tesseract_cmd = r"C:\Program Files\Tesseract-OCR\tesseract.exe"
+>>>>>>> 8c6000e2885993cbbb1fe507be2aeb004eb5c52f

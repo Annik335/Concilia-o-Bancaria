@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 from pydantic import AliasChoices, BaseModel, Field
+=======
+from pydantic import BaseModel, Field
+>>>>>>> 8c6000e2885993cbbb1fe507be2aeb004eb5c52f
 
 class DevLoginRequest(BaseModel):
     email: str = Field(default="analista@grupoepa.local", max_length=255)
@@ -10,8 +14,12 @@ class ReconciliationCreate(BaseModel):
     bank: str = Field(pattern="^(ITAU|SANTANDER)$")
     period_start: str | None = None
     period_end: str | None = None
+<<<<<<< HEAD
     tolerance_days: int = Field(default=3, ge=0, le=60, validation_alias=AliasChoices("tolerance_days", "tolerancia_dias"), description="Tolerância de data em dias")
 
+=======
+    tolerance_days: int = Field(default=3, ge=0, le=31)
+>>>>>>> 8c6000e2885993cbbb1fe507be2aeb004eb5c52f
 
 class ManualMatchRequest(BaseModel):
     invoice_transaction_id: int

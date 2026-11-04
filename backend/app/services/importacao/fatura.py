@@ -66,6 +66,7 @@ def _extract_rows(text: str, year_base: int | None = None) -> tuple[list[dict], 
         normalized = normalize_text(desc)
         if any(x in normalized for x in ["total da fatura", "pagamento minimo", "vencimento", "melhor dia", "limite disponivel", "resumo da fatura"]):
             continue
+<<<<<<< HEAD
         credit_markers = ("estorno", "cancelamento", "credito", "reembolso", "devolucao", "pagamento efetuado", "pagamento recebido")
         debit_markers = ("compra", "debito", "taxa", "iof", "juros", "encargo", "anuidade")
         if any(marker in normalized for marker in credit_markers):
@@ -77,6 +78,9 @@ def _extract_rows(text: str, year_base: int | None = None) -> tuple[list[dict], 
             kind = "INDEFINIDO"
         else:
             kind = "COMPRA"
+=======
+        kind = "ESTORNO" if any(x in normalized for x in ["estorno", "cancelamento", "credito", "anuidade diferenci"]) else ("DEBITO" if amount < 0 else "COMPRA")
+>>>>>>> 8c6000e2885993cbbb1fe507be2aeb004eb5c52f
         rows.append({"date": dt.isoformat(), "merchant": desc, "description": desc, "reference": "", "amount": str(amount), "kind": kind,
                      "raw": {"source_line": line}})
     return rows, ignored

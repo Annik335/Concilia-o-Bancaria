@@ -7,6 +7,7 @@ from app.db.session import Base, engine
 from app.core.config import settings
 
 
+<<<<<<< HEAD
 def test_reconciliation_works_without_auth_in_development_mode(monkeypatch):
     monkeypatch.setattr(settings, "secret_key", "integration-test-secret-key-long-enough")
     monkeypatch.setattr(settings, "auth_mode", "development")
@@ -18,6 +19,8 @@ def test_reconciliation_works_without_auth_in_development_mode(monkeypatch):
     Base.metadata.drop_all(bind=engine)
 
 
+=======
+>>>>>>> 8c6000e2885993cbbb1fe507be2aeb004eb5c52f
 def test_create_import_process_manual_audit_export_and_reprocess(tmp_path, monkeypatch):
     monkeypatch.setattr(settings,"secret_key","integration-test-secret-key-long-enough")
     Base.metadata.drop_all(bind=engine)

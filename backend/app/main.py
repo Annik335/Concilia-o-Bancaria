@@ -7,6 +7,7 @@ from app.db.session import Base, engine
 from app.api.routes import router
 from app.models import entities  # noqa: F401 - registers SQLAlchemy models
 
+<<<<<<< HEAD
 import pytesseract
 import sys
 
@@ -15,6 +16,8 @@ if sys.platform == "win32":
     pytesseract.pytesseract.tesseract_cmd = r"C:\Program Files\Tesseract-OCR\tesseract.exe"
 
 
+=======
+>>>>>>> 8c6000e2885993cbbb1fe507be2aeb004eb5c52f
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     Path(settings.storage_path).mkdir(parents=True, exist_ok=True)
