@@ -1,0 +1,10 @@
+Grupo EPA — Sistema Web de Conciliação Bancária
+Versão de entrega: 1.3.0
+
+Esta versão inclui ajustes no motor de conciliação, importação Odoo,
+compatibilidade de API e interface. Consulte README.md e
+ docs/VALIDACAO_E_LIMITACOES.md antes de instalar.
+
+Não está liberada para produção. A integração Microsoft Entra ID,
+homologação com faturas reais, build Vite e execução Docker no ambiente
+corporativo ainda precisam ser concluídos/validados.
